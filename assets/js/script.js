@@ -4,107 +4,68 @@
 
 
 
-var timeLeftToday;
+var secondsLeftToday;
+var secondsToEOD;
+var blockColorClass;
 
 //SET GLOBAL VARIABLES ABOVE
 //---------------------------------------------------------------------------------------------------------------
 //DEFINE UTILITY FUNCTIONS BELOW
 
-
-
 // handle displaying the time
 function displayTime() {
     var rightNow = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
-    var hourNow = moment().format('H');
+    // var hourNow = moment().format('H');
+    var hourNow = 12;
     var minNow = moment().format('m');
     var secNow = moment().format('s');
     var ampmNow = moment().format('a');
-    timeLeftToday = (((24 - hourNow) * 60 * 60) - (minNow * 60) - secNow);
+    secondsLeftToday = (((24 - hourNow) * 60 * 60) - (minNow * 60) - secNow);
     $('#currentDay').text(rightNow);
     window.setTimeout("displayTime()", 1000);
-    console.log(timeLeftToday);
+    console.log(secondsLeftToday);
 }
-displayTime();
-
-
-
-
-
-
-
-
-
-
-
-
-function setTimer(timeInSecs, timerDomElement) {
-    var timeInSecs = 
-    timerInterval = setInterval(function () {
-        timeInSecs--;
-        $('#currentDay').text(rightNow);
-        if (timeInSecs === 0) {
-            clearInterval(timerInterval);
-            $('#currentDay').text(rightNow);;
-        }
-        return timeInSecs;
-    }, 1000);
-}
-
-
-
-
-
-function ShowTime() {
-    var dt = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
-    console.log(dt);
-$('#currentDay').text(dt);  
-window.setTimeout("ShowTime()", 1000);
-}  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //DEFINE UTILITY FUNCTIONS ABOVE
 //------------------------------------------------------------------------------------------------------------------
 //LISTEN AND TAKE ACTION BELOW
 
-
 // psuedocode
-
 // create everything from jquery inside of class container
 // a for loop that iterates for all instances
 
 
 function createTimeblocks() {
-            
     //populate the content
         for (var i = 0; i < 9; i++) {
+
+            secondsToEOD = ((24 - (i + 9)) * 60 * 60);
+            if (secondsLeftToday < (secondsToEOD) && secondsLeftToday > (secondsToEOD - 1200)) {
+               var blockColorClass = 'present';
+            } else if (secondsLeftToday > secondsToEOD) {
+               var blockColorClass = 'future';
+            } else if (secondsLeftToday < (secondsToEOD + 1200)) {
+                var blockColorClass = 'past';
+            }
+
             var hours = ['9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM'];
             var createTimeBlock = $('<div>').addClass('time-block row d-flex col-12').attr('id', 'timeblock' + i);
-            var createHour = $('<div>').addClass('.hour col').text(hours.at(i));
-            var createTextInput = $('<input>').addClass('.textarea col-10');
-            createSaveButton = $('<button>').addClass('.saveBtn col');
+            var createHour = $('<div>').addClass('hour col').text(hours.at(i));
+            var createTextInput = $('<input>').addClass('textarea ' + blockColorClass + ' col-8');
+            createSaveButton = $('<button>').addClass('saveBtn col');
             $('.container').append(createTimeBlock);
             createTimeBlock.append(createHour, createTextInput, createSaveButton);
+            
+    console.log(secondsToEOD);
+    console.log(blockColorClass);
         }
-    } 
+    }
+
+
+
+
+
+displayTime();
     createTimeblocks();
 
 
