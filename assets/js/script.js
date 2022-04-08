@@ -15,8 +15,7 @@ var blockColorClass;
 // handle displaying the time
 function displayTime() {
     var rightNow = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
-    // var hourNow = moment().format('H');
-    var hourNow = 12;
+    var hourNow = moment().format('H');
     var minNow = moment().format('m');
     var secNow = moment().format('s');
     var ampmNow = moment().format('a');
