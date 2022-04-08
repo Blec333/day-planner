@@ -99,17 +99,14 @@ displayTime();
 //LISTEN AND TAKE ACTION BELOW
 
 
-document.querySelectorAll('.saveBtn').addEventListener('click', function (event) {
+document.querySelectorAll('.saveBtn').forEach(item => { item.addEventListener('click', function (event) {
     var btnEl = $(event.target);
-    activatedTimeBlock = btnEl.parent();
+    var activatedTimeBlock = btnEl.parent();
     var targetedText = activatedTimeBlock.children('.textarea').val();
-    console.log(targetedText);
     var hourText = activatedTimeBlock.children('.hour').text() + '-Data';
-    console.log(hourText);
     updateStoredArray(hourText, targetedText);
-    console.log(targetedText);
 });
-
+});
 
 
 
