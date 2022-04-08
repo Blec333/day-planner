@@ -4,7 +4,7 @@
 
 
 
-
+var timeLeftToday;
 
 //SET GLOBAL VARIABLES ABOVE
 //---------------------------------------------------------------------------------------------------------------
@@ -15,8 +15,68 @@
 // handle displaying the time
 function displayTime() {
     var rightNow = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
-    return rightNow;
+    var hourNow = moment().format('H');
+    var minNow = moment().format('m');
+    var secNow = moment().format('s');
+    var ampmNow = moment().format('a');
+    timeLeftToday = (((24 - hourNow) * 60 * 60) - (minNow * 60) - secNow);
+    $('#currentDay').text(rightNow);
+    window.setTimeout("displayTime()", 1000);
+    console.log(timeLeftToday);
 }
+displayTime();
+
+
+
+
+
+
+
+
+
+
+
+
+function setTimer(timeInSecs, timerDomElement) {
+    var timeInSecs = 
+    timerInterval = setInterval(function () {
+        timeInSecs--;
+        $('#currentDay').text(rightNow);
+        if (timeInSecs === 0) {
+            clearInterval(timerInterval);
+            $('#currentDay').text(rightNow);;
+        }
+        return timeInSecs;
+    }, 1000);
+}
+
+
+
+
+
+function ShowTime() {
+    var dt = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
+    console.log(dt);
+$('#currentDay').text(dt);  
+window.setTimeout("ShowTime()", 1000);
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -33,19 +93,18 @@ function displayTime() {
 
 
 function createTimeblocks() {
+            
+    //populate the content
         for (var i = 0; i < 9; i++) {
             var hours = ['9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM'];
-            timeBlockContainer = $('.container');
-            var createTimeBlock = $('<div>').addClass('.time-block d-flex').attr('id', 'timeblock' + i);
-            var createHour = $('<div>').addClass('.hour').text(hours.at(i));
-            var createTextInput = $('<input>').addClass('.textarea');
-            createSaveButton = $('<button>').addClass('.saveBtn');
-            timeBlockContainer.append(createTimeBlock);
+            var createTimeBlock = $('<div>').addClass('time-block row d-flex col-12').attr('id', 'timeblock' + i);
+            var createHour = $('<div>').addClass('.hour col').text(hours.at(i));
+            var createTextInput = $('<input>').addClass('.textarea col-10');
+            createSaveButton = $('<button>').addClass('.saveBtn col');
+            $('.container').append(createTimeBlock);
             createTimeBlock.append(createHour, createTextInput, createSaveButton);
-
         }
-    }
-
+    } 
     createTimeblocks();
 
 
