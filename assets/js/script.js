@@ -16,6 +16,7 @@ var blockColorClass;
 function displayTime() {
     var rightNow = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
     var hourNow = moment().format('H');
+    var hourNow = 12;
     var minNow = moment().format('m');
     var secNow = moment().format('s');
     var ampmNow = moment().format('a');
@@ -59,21 +60,24 @@ function createTimeblocks() {
     for (var i = 0; i < hours.length; i++) {
 
         secondsToEOD = ((24 - (i + hours.length)) * 60 * 60);
-        if (secondsLeftToday < secondsToEOD && secondsLeftToday > (secondsToEOD - 1200)) {
+        if (secondsLeftToday < secondsToEOD && secondsLeftToday > (secondsToEOD - 3600)) {
             var blockColorClass = 'present';
         } else if (secondsLeftToday > secondsToEOD) {
             var blockColorClass = 'future';
         } else if (secondsLeftToday < (secondsToEOD)) {
             var blockColorClass = 'past';
         }
+        console.log(blockColorClass);
 
         var createTimeBlock = $('<div>').addClass('time-block row d-flex col-12').attr('id', 'timeblock' + i);
         var createHour = $('<div>').addClass('hour col').text(hours.at(i));
-        var createTextInput = $('<input>').addClass('textarea ' + blockColorClass + ' col-8')
+        var createTextInput = $('<input>').addClass('textarea ' + blockColorClass + ' col-8');
         var addStoredText = createTextInput.val(retrieveStoredArray(createHour.text() + '-Data').at(0));
         createSaveButton = $('<button>').addClass('saveBtn col').attr('id', 'button' + i);
+        createSaveIcon = $('<span>').addClass('glyphicon glyphicon-floppy-save');
+        var completeSaveButton = createSaveButton.append(createSaveIcon);
         $('.container').append(createTimeBlock);
-        createTimeBlock.append(createHour, createTextInput, createSaveButton);
+        createTimeBlock.append(createHour, createTextInput, completeSaveButton);
     }
 }
 displayTime();
